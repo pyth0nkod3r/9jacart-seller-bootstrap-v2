@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics - SellerHub Seller</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <img src="https://images.unsplash.com/photo-1572025442646-866d16c84a54?w=60&h=60&fit=crop" alt="SellerHub" class="rounded">
+      <span>SellerHub</span>
+    </div>
+    <nav class="nav flex-column mt-3">
+      <a class="nav-link" href="dashboard.html">
+        <i class="bi bi-grid-1x2"></i> Dashboard
+      </a>
+      <a class="nav-link" href="products.html">
+        <i class="bi bi-box-seam"></i> Products
+      </a>
+      <a class="nav-link" href="orders.html">
+        <i class="bi bi-cart3"></i> Orders
+      </a>
+      <a class="nav-link" href="storefront.html">
+        <i class="bi bi-shop"></i> Storefront
+      </a>
+      <a class="nav-link active" href="analytics.html">
+        <i class="bi bi-bar-chart-line"></i> Analytics
+      </a>
+      <a class="nav-link" href="notifications.html">
+        <i class="bi bi-bell"></i> Notifications
+      </a>
+      <a class="nav-link" href="settings.html">
+        <i class="bi bi-gear"></i> Settings
+      </a>
+    </nav>
+    <div class="mt-auto p-3">
+      <button class="btn btn-outline-light w-100" onclick="logout()">
+        <i class="bi bi-box-arrow-left me-2"></i>Logout
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Header -->
+    <header class="top-header d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <button class="btn btn-outline-secondary me-3 d-lg-none" id="sidebarToggle">
+          <i class="bi bi-list"></i>
+        </button>
+        <h1 class="h4 mb-0">Analytics</h1>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <select class="form-select" style="width: auto;">
+          <option>Last 7 days</option>
+          <option selected>Last 30 days</option>
+          <option>Last 90 days</option>
+          <option>This Year</option>
+        </select>
+        <button class="btn btn-outline-primary">
+          <i class="bi bi-download me-1"></i> Export
+        </button>
+      </div>
+    </header>
+
+    <!-- Analytics Content -->
+    <div class="container-fluid p-4">
+      <!-- Revenue Stats -->
+      <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <small class="text-muted">Total Revenue</small>
+                  <h3 class="mb-0">₦2,450,000</h3>
+                </div>
+                <div class="rounded-circle bg-success bg-opacity-10 p-3">
+                  <i class="bi bi-currency-dollar text-success fs-4"></i>
+                </div>
+              </div>
+              <div class="mt-2">
+                <span class="text-success"><i class="bi bi-arrow-up"></i> 23.5%</span>
+                <small class="text-muted"> vs last period</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <small class="text-muted">Total Orders</small>
+                  <h3 class="mb-0">156</h3>
+                </div>
+                <div class="rounded-circle bg-primary bg-opacity-10 p-3">
+                  <i class="bi bi-cart text-primary fs-4"></i>
+                </div>
+              </div>
+              <div class="mt-2">
+                <span class="text-success"><i class="bi bi-arrow-up"></i> 18.2%</span>
+                <small class="text-muted"> vs last period</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <small class="text-muted">Avg. Order Value</small>
+                  <h3 class="mb-0">₦15,705</h3>
+                </div>
+                <div class="rounded-circle bg-warning bg-opacity-10 p-3">
+                  <i class="bi bi-receipt text-warning fs-4"></i>
+                </div>
+              </div>
+              <div class="mt-2">
+                <span class="text-success"><i class="bi bi-arrow-up"></i> 4.5%</span>
+                <small class="text-muted"> vs last period</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 mb-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <small class="text-muted">Conversion Rate</small>
+                  <h3 class="mb-0">3.2%</h3>
+                </div>
+                <div class="rounded-circle bg-info bg-opacity-10 p-3">
+                  <i class="bi bi-graph-up-arrow text-info fs-4"></i>
+                </div>
+              </div>
+              <div class="mt-2">
+                <span class="text-danger"><i class="bi bi-arrow-down"></i> 0.8%</span>
+                <small class="text-muted"> vs last period</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="row mb-4">
+        <div class="col-lg-8 mb-4">
+          <div class="card h-100">
+            <div class="card-header">
+              <h5 class="mb-0">Revenue Overview</h5>
+            </div>
+            <div class="card-body">
+              <!-- Placeholder for chart -->
+              <div class="d-flex justify-content-between align-items-end h-100" style="min-height: 300px;">
+                <div class="text-center" style="width: 10%;">
+                  <div class="bg-primary rounded" style="height: 120px;"></div>
+                  <small class="text-muted">Mon</small>
+                </div>
+                <div class="text-center" style="width: 10%;">
+                  <div class="bg-primary rounded" style="height: 180px;"></div>
+                  <small class="text-muted">Tue</small>
+                </div>
+                <div class="text-center" style="width: 10%;">
+                  <div class="bg-primary rounded" style="height: 150px;"></div>
+                  <small class="text-muted">Wed</small>
+                </div>
+                <div class="text-center" style="width: 10%;">
+                  <div class="bg-primary rounded" style="height: 220px;"></div>
+                  <small class="text-muted">Thu</small>
+                </div>
+                <div class="text-center" style="width: 10%;">
+                  <div class="bg-primary rounded" style="height: 200px;"></div>
+                  <small class="text-muted">Fri</small>
+                </div>
+                <div class="text-center" style="width: 10%;">
+                  <div class="bg-primary rounded" style="height: 280px;"></div>
+                  <small class="text-muted">Sat</small>
+                </div>
+                <div class="text-center" style="width: 10%;">
+                  <div class="bg-primary rounded" style="height: 160px;"></div>
+                  <small class="text-muted">Sun</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+          <div class="card h-100">
+            <div class="card-header">
+              <h5 class="mb-0">Sales by Category</h5>
+            </div>
+            <div class="card-body">
+              <div class="mb-3">
+                <div class="d-flex justify-content-between mb-1">
+                  <span>Electronics</span>
+                  <span class="fw-bold">45%</span>
+                </div>
+                <div class="progress" style="height: 8px;">
+                  <div class="progress-bar" style="width: 45%;"></div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="d-flex justify-content-between mb-1">
+                  <span>Fashion</span>
+                  <span class="fw-bold">25%</span>
+                </div>
+                <div class="progress" style="height: 8px;">
+                  <div class="progress-bar bg-info" style="width: 25%;"></div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="d-flex justify-content-between mb-1">
+                  <span>Home & Living</span>
+                  <span class="fw-bold">15%</span>
+                </div>
+                <div class="progress" style="height: 8px;">
+                  <div class="progress-bar bg-warning" style="width: 15%;"></div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="d-flex justify-content-between mb-1">
+                  <span>Beauty</span>
+                  <span class="fw-bold">10%</span>
+                </div>
+                <div class="progress" style="height: 8px;">
+                  <div class="progress-bar bg-danger" style="width: 10%;"></div>
+                </div>
+              </div>
+              <div>
+                <div class="d-flex justify-content-between mb-1">
+                  <span>Others</span>
+                  <span class="fw-bold">5%</span>
+                </div>
+                <div class="progress" style="height: 8px;">
+                  <div class="progress-bar bg-secondary" style="width: 5%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Products & Customers -->
+      <div class="row">
+        <div class="col-lg-6 mb-4">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">Top Selling Products</h5>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Sales</th>
+                      <th>Revenue</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=40&h=40&fit=crop" class="rounded me-2" style="width: 40px; height: 40px;">
+                          Cotton T-Shirt Pack
+                        </div>
+                      </td>
+                      <td>445</td>
+                      <td>₦8,232,500</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=40&h=40&fit=crop" class="rounded me-2" style="width: 40px; height: 40px;">
+                          Organic Green Tea Set
+                        </div>
+                      </td>
+                      <td>312</td>
+                      <td>₦3,900,000</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img src="https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=40&h=40&fit=crop" class="rounded me-2" style="width: 40px; height: 40px;">
+                          Portable Power Bank
+                        </div>
+                      </td>
+                      <td>267</td>
+                      <td>₦4,135,500</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=40&h=40&fit=crop" class="rounded me-2" style="width: 40px; height: 40px;">
+                          Wireless Headphones
+                        </div>
+                      </td>
+                      <td>234</td>
+                      <td>₦10,530,000</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="d-flex align-items-center">
+                          <img src="https://images.unsplash.com/photo-1556228720-195a672e8a03?w=40&h=40&fit=crop" class="rounded me-2" style="width: 40px; height: 40px;">
+                          Natural Skincare Set
+                        </div>
+                      </td>
+                      <td>201</td>
+                      <td>₦5,728,500</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="mb-0">Customer Insights</h5>
+            </div>
+            <div class="card-body">
+              <div class="row text-center mb-4">
+                <div class="col-4">
+                  <div class="h3 mb-0" style="color: var(--primary-color);">892</div>
+                  <small class="text-muted">Total Customers</small>
+                </div>
+                <div class="col-4">
+                  <div class="h3 mb-0 text-primary">156</div>
+                  <small class="text-muted">New This Month</small>
+                </div>
+                <div class="col-4">
+                  <div class="h3 mb-0 text-warning">45</div>
+                  <small class="text-muted">Repeat Buyers</small>
+                </div>
+              </div>
+
+              <h6 class="mb-3">Customer Locations</h6>
+              <div class="mb-2">
+                <div class="d-flex justify-content-between">
+                  <span>Lagos</span>
+                  <span>42%</span>
+                </div>
+                <div class="progress" style="height: 6px;">
+                  <div class="progress-bar" style="width: 42%;"></div>
+                </div>
+              </div>
+              <div class="mb-2">
+                <div class="d-flex justify-content-between">
+                  <span>Abuja</span>
+                  <span>18%</span>
+                </div>
+                <div class="progress" style="height: 6px;">
+                  <div class="progress-bar" style="width: 18%;"></div>
+                </div>
+              </div>
+              <div class="mb-2">
+                <div class="d-flex justify-content-between">
+                  <span>Port Harcourt</span>
+                  <span>12%</span>
+                </div>
+                <div class="progress" style="height: 6px;">
+                  <div class="progress-bar" style="width: 12%;"></div>
+                </div>
+              </div>
+              <div class="mb-2">
+                <div class="d-flex justify-content-between">
+                  <span>Kano</span>
+                  <span>8%</span>
+                </div>
+                <div class="progress" style="height: 6px;">
+                  <div class="progress-bar" style="width: 8%;"></div>
+                </div>
+              </div>
+              <div>
+                <div class="d-flex justify-content-between">
+                  <span>Others</span>
+                  <span>20%</span>
+                </div>
+                <div class="progress" style="height: 6px;">
+                  <div class="progress-bar" style="width: 20%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/theme-loader.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

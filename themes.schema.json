@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "SellerHub Themes Configuration",
+  "description": "Schema for pluggable theming system",
+  "type": "object",
+  "required": ["version", "themes"],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string",
+      "description": "Configuration version"
+    },
+    "defaultTheme": {
+      "type": "string",
+      "description": "Default theme ID to use"
+    },
+    "storageKey": {
+      "type": "string",
+      "description": "LocalStorage key for theme preference",
+      "default": "sellerhub-theme"
+    },
+    "themes": {
+      "type": "object",
+      "description": "Theme definitions",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["name", "colors"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Display name for the theme"
+          },
+          "description": {
+            "type": "string",
+            "description": "Theme description"
+          },
+          "isDark": {
+            "type": "boolean",
+            "description": "Whether this is a dark theme",
+            "default": false
+          },
+          "colors": {
+            "type": "object",
+            "description": "Color definitions",
+            "required": ["primary", "background", "textPrimary"],
+            "properties": {
+              "primary": {
+                "type": "string",
+                "description": "Primary brand color",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              },
+              "primaryHover": {
+                "type": "string",
+                "description": "Primary color hover state"
+              },
+              "primaryLight": {
+                "type": "string",
+                "description": "Lighter primary variant"
+              },
+              "secondary": {
+                "type": "string",
+                "description": "Secondary color"
+              },
+              "accent": {
+                "type": "string",
+                "description": "Accent color for highlights"
+              },
+              "background": {
+                "type": "string",
+                "description": "Main background color"
+              },
+              "surface": {
+                "type": "string",
+                "description": "Surface/card background color"
+              },
+              "textPrimary": {
+                "type": "string",
+                "description": "Primary text color"
+              },
+              "textSecondary": {
+                "type": "string",
+                "description": "Secondary text color"
+              },
+              "textMuted": {
+                "type": "string",
+                "description": "Muted/disabled text color"
+              },
+              "border": {
+                "type": "string",
+                "description": "Border color"
+              },
+              "success": {
+                "type": "string",
+                "description": "Success state color"
+              },
+              "warning": {
+                "type": "string",
+                "description": "Warning state color"
+              },
+              "danger": {
+                "type": "string",
+                "description": "Danger/error state color"
+              },
+              "info": {
+                "type": "string",
+                "description": "Info state color"
+              },
+              "sidebarBg": {
+                "type": "string",
+                "description": "Sidebar background color"
+              },
+              "sidebarText": {
+                "type": "string",
+                "description": "Sidebar text color"
+              },
+              "cardShadow": {
+                "type": "string",
+                "description": "Card shadow CSS value"
+              }
+            }
+          }
+        }
+      }
+    },
+    "colorMapping": {
+      "type": "object",
+      "description": "Maps theme colors to CSS variables",
+      "additionalProperties": {
+        "type": "string"
+      }
+    }
+  }
+}
