@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add Product - SellerHub Seller</title>
+  <title>Edit Product - SellerHub Seller</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -61,15 +61,14 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
               <li class="breadcrumb-item"><a href="products.html">Products</a></li>
-              <li class="breadcrumb-item active">Add Product</li>
+              <li class="breadcrumb-item active" id="breadcrumbProductName">Edit Product</li>
             </ol>
           </nav>
         </div>
       </div>
-      </div>
     </header>
 
-    <!-- Add Product Content -->
+    <!-- Edit Product Content -->
     <div class="container-fluid p-4">
       <div class="row">
         <div class="col-lg-8">
@@ -82,18 +81,18 @@
               <div class="card-body">
                 <div class="mb-3">
                   <label class="form-label">Product Name *</label>
-                  <input type="text" class="form-control" placeholder="Enter product name" required>
+                  <input type="text" class="form-control" id="editProductName" required>
                 </div>
 
                 <div class="mb-3">
                   <label class="form-label">Product Description *</label>
-                  <textarea class="form-control" rows="4" placeholder="Describe your product in detail..." required></textarea>
+                  <textarea class="form-control" rows="4" id="editProductDescription" required></textarea>
                 </div>
 
                 <div class="row">
                   <div class="col-md-6 mb-3">
                     <label class="form-label">Category *</label>
-                    <select class="form-select" required>
+                    <select class="form-select" id="editProductCategory" required>
                       <option value="">Select category</option>
                       <option>Electronics</option>
                       <option>Fashion</option>
@@ -105,7 +104,7 @@
                   </div>
                   <div class="col-md-6 mb-3">
                     <label class="form-label">Brand</label>
-                    <input type="text" class="form-control" placeholder="Brand name">
+                    <input type="text" class="form-control" id="editProductBrand" placeholder="Brand name">
                   </div>
                 </div>
               </div>
@@ -120,16 +119,16 @@
                 <div class="row">
                   <div class="col-md-4 mb-3">
                     <label class="form-label">Price (₦) *</label>
-                    <input type="number" class="form-control" placeholder="0.00" required>
+                    <input type="number" class="form-control" id="editProductPrice" required>
                   </div>
                   <div class="col-md-4 mb-3">
                     <label class="form-label">Compare at Price (₦)</label>
-                    <input type="number" class="form-control" placeholder="0.00">
+                    <input type="number" class="form-control" id="editComparePrice" placeholder="0.00">
                     <small class="text-muted">Original price for showing discount</small>
                   </div>
                   <div class="col-md-4 mb-3">
                     <label class="form-label">Cost per Item (₦)</label>
-                    <input type="number" class="form-control" placeholder="0.00">
+                    <input type="number" class="form-control" id="editCostPrice" placeholder="0.00">
                     <small class="text-muted">For profit margin calculation</small>
                   </div>
                 </div>
@@ -137,15 +136,15 @@
                 <div class="row">
                   <div class="col-md-4 mb-3">
                     <label class="form-label">Stock Quantity *</label>
-                    <input type="number" class="form-control" placeholder="0" required>
+                    <input type="number" class="form-control" id="editProductStock" required>
                   </div>
                   <div class="col-md-4 mb-3">
                     <label class="form-label">SKU</label>
-                    <input type="text" class="form-control" placeholder="SKU-001">
+                    <input type="text" class="form-control" id="editProductSku" placeholder="SKU-001">
                   </div>
                   <div class="col-md-4 mb-3">
                     <label class="form-label">Barcode</label>
-                    <input type="text" class="form-control" placeholder="Barcode (optional)">
+                    <input type="text" class="form-control" id="editProductBarcode" placeholder="Barcode (optional)">
                   </div>
                 </div>
               </div>
@@ -157,6 +156,7 @@
                 <h5 class="mb-0">Product Images</h5>
               </div>
               <div class="card-body">
+                <div id="currentProductImage" class="mb-3"></div>
                 <div class="border rounded p-4 text-center" style="border-style: dashed !important;">
                   <i class="bi bi-cloud-upload fs-1 text-muted mb-2"></i>
                   <p class="mb-2">Drag and drop images here, or click to browse</p>
@@ -167,24 +167,6 @@
                       <i class="bi bi-plus-lg me-1"></i> Add Images
                     </button>
                   </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Variants -->
-            <div class="card mb-4">
-              <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Variants</h5>
-                <button type="button" class="btn btn-sm btn-outline-primary">
-                  <i class="bi bi-plus-lg me-1"></i> Add Variant
-                </button>
-              </div>
-              <div class="card-body">
-                <p class="text-muted mb-3">Add variants like size, color, or material if your product comes in multiple options.</p>
-                
-                <div class="alert alert-info">
-                  <i class="bi bi-info-circle me-2"></i>
-                  No variants added yet. Your product will have default pricing and stock.
                 </div>
               </div>
             </div>
@@ -228,7 +210,7 @@
             <div class="card-body">
               <div class="mb-3">
                 <label class="form-label">Product Status</label>
-                <select class="form-select">
+                <select class="form-select" id="editProductStatus">
                   <option value="active">Active</option>
                   <option value="draft">Draft</option>
                   <option value="inactive">Inactive</option>
@@ -242,11 +224,11 @@
               </div>
               <div class="d-grid gap-2">
                 <button type="submit" form="productForm" class="btn btn-primary">
-                  <i class="bi bi-check-lg me-1"></i> Save Product
+                  <i class="bi bi-check-lg me-1"></i> Update Product
                 </button>
-                <button type="button" class="btn btn-outline-secondary">
-                  Save as Draft
-                </button>
+                <a href="products.html" class="btn btn-outline-secondary">
+                  Cancel
+                </a>
               </div>
             </div>
           </div>
@@ -265,15 +247,15 @@
             </div>
           </div>
 
-          <!-- Preview -->
-          <div class="card">
-            <div class="card-header">
-              <h5 class="mb-0">Preview</h5>
+          <!-- Danger Zone -->
+          <div class="card border-danger">
+            <div class="card-header bg-danger bg-opacity-10">
+              <h5 class="mb-0 text-danger">Danger Zone</h5>
             </div>
-            <div class="card-body text-center">
-              <p class="text-muted">Product preview will appear here once you add images and details.</p>
-              <button type="button" class="btn btn-outline-primary btn-sm">
-                <i class="bi bi-eye me-1"></i> Preview Listing
+            <div class="card-body">
+              <p class="text-muted small mb-3">Deleting a product is permanent and cannot be undone.</p>
+              <button type="button" class="btn btn-outline-danger w-100" onclick="deleteCurrentProduct()">
+                <i class="bi bi-trash me-1"></i> Delete Product
               </button>
             </div>
           </div>
@@ -285,5 +267,61 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="js/theme-loader.js"></script>
   <script src="js/app.js"></script>
+  <script>
+    // Load product data from MOCK_PRODUCTS based on URL ?id= parameter
+    document.addEventListener('DOMContentLoaded', function () {
+      const params = new URLSearchParams(window.location.search);
+      const productId = parseInt(params.get('id'));
+
+      if (!productId || !MOCK_PRODUCTS) {
+        showToast('Product not found', 'error');
+        return;
+      }
+
+      const product = MOCK_PRODUCTS.find(function (p) { return p.id === productId; });
+
+      if (!product) {
+        showToast('Product not found', 'error');
+        return;
+      }
+
+      // Populate form fields
+      document.getElementById('breadcrumbProductName').textContent = product.name;
+      document.getElementById('editProductName').value = product.name;
+      document.getElementById('editProductDescription').value = product.description;
+      document.getElementById('editProductPrice').value = product.price;
+      document.getElementById('editProductStock').value = product.stock;
+      document.getElementById('editProductStatus').value = product.status;
+
+      // Set category
+      var categorySelect = document.getElementById('editProductCategory');
+      for (var i = 0; i < categorySelect.options.length; i++) {
+        if (categorySelect.options[i].text === product.category) {
+          categorySelect.selectedIndex = i;
+          break;
+        }
+      }
+
+      // Show current image
+      var imageContainer = document.getElementById('currentProductImage');
+      imageContainer.innerHTML =
+        '<div class="d-flex align-items-center gap-3">' +
+          '<img src="' + product.image + '" alt="' + product.name + '" class="rounded" style="width: 80px; height: 80px; object-fit: cover;">' +
+          '<div>' +
+            '<p class="mb-0 fw-semibold">Current Image</p>' +
+            '<small class="text-muted">' + product.sales + ' sales</small>' +
+          '</div>' +
+        '</div>';
+    });
+
+    function deleteCurrentProduct() {
+      if (confirm('Are you sure you want to delete this product? This action cannot be undone.')) {
+        showToast('Product deleted successfully!', 'success');
+        setTimeout(function () {
+          window.location.href = 'products.html';
+        }, 1000);
+      }
+    }
+  </script>
 </body>
 </html>
