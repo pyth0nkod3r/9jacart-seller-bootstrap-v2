@@ -300,7 +300,7 @@ function toggleSidebar() {
 function setActiveNav() {
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
   const navLinks = document.querySelectorAll('.sidebar .nav-link');
-  
+
   navLinks.forEach(link => {
     const href = link.getAttribute('href');
     if (href === currentPage || (currentPage === '' && href === 'index.html')) {
@@ -576,7 +576,7 @@ function renderRecentOrders() {
   if (!tableBody) return;
 
   const recentOrders = MOCK_ORDERS.slice(0, 5);
-  
+
   tableBody.innerHTML = recentOrders.map(order => `
     <tr>
       <td><strong>${order.id}</strong></td>
@@ -725,7 +725,7 @@ function updateUserAvatar() {
     el.src = user.avatar;
     el.alt = user.name;
   });
-  
+
   const userNameElements = document.querySelectorAll('.user-name');
   userNameElements.forEach(el => {
     el.textContent = user.name;
@@ -773,7 +773,7 @@ function viewOrder(orderId) {
         <strong class="text-primary">${formatCurrency(order.total)}</strong>
       </div>
     `;
-    
+
     const modal = new bootstrap.Modal(document.getElementById('orderModal'));
     modal.show();
   }
@@ -801,7 +801,7 @@ function markNotificationRead(notificationId) {
 
 function showToast(message, type = 'success') {
   const toastContainer = document.getElementById('toastContainer') || createToastContainer();
-  
+
   const bgClass = {
     success: 'bg-success',
     error: 'bg-danger',
@@ -817,9 +817,9 @@ function showToast(message, type = 'success') {
       <button type="button" class="btn-close btn-close-white" onclick="this.parentElement.parentElement.remove()"></button>
     </div>
   `;
-  
+
   toastContainer.appendChild(toast);
-  
+
   setTimeout(() => {
     toast.remove();
   }, 3000);
@@ -902,7 +902,7 @@ function handleSettingsForm(event) {
 // INITIALIZATION
 // =============================================
 
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', async function () {
   // Check authentication — stop if redirecting
   if (!checkAuth()) return;
 
@@ -946,7 +946,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   const notificationTabs = document.querySelectorAll('[data-filter]');
   if (notificationTabs.length > 0) {
     notificationTabs.forEach(tab => {
-      tab.addEventListener('click', function(e) {
+      tab.addEventListener('click', function (e) {
         e.preventDefault();
         // Update active tab
         notificationTabs.forEach(t => t.classList.remove('active'));
@@ -961,6 +961,9 @@ document.addEventListener('DOMContentLoaded', async function() {
   const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
   tooltipTriggerList.forEach(el => new bootstrap.Tooltip(el));
 
+  // Initialize floating scroll-to-top button (mirrors React `ScrollToTop.tsx`)
+  initScrollToTop();
+
   // Initialize theme switcher LAST (async — must never block the above)
   try {
     await initThemeSwitcher();
@@ -968,3 +971,35 @@ document.addEventListener('DOMContentLoaded', async function() {
     console.warn('[App] Theme switcher init failed:', err);
   }
 });
+
+/**
+ * Floating scroll-to-top button.
+ * Mirrors React `ScrollToTop.tsx`: appears when scrolled past 300px,
+ * fades out 1s after the user stops scrolling, smooth-scrolls to top on click.
+ */
+function initScrollToTop() {
+  // Don't create twice
+  if (document.getElementById('scrollToTopBtn')) return;
+
+  const btn = document.createElement('button');
+  btn.id = 'scrollToTopBtn';
+  btn.className = 'scroll-to-top-btn';
+  btn.setAttribute('aria-label', 'Scroll to top');
+  btn.innerHTML = '<i class="bi bi-arrow-up"></i>';
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  document.body.appendChild(btn);
+
+  let hideTimeout = null;
+  const onScroll = () => {
+    if (hideTimeout) clearTimeout(hideTimeout);
+    if (window.pageYOffset > 300) {
+      btn.classList.add('show');
+      hideTimeout = setTimeout(() => btn.classList.remove('show'), 1000);
+    } else {
+      btn.classList.remove('show');
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+}

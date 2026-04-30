@@ -130,6 +130,14 @@
       "additionalProperties": {
         "type": "string"
       }
+    },
+    "reactAliases": {
+      "type": "object",
+      "description": "Additional CSS variable names to set for each theme color, mirroring the React (shadcn-style) token names so a single themes.config.json drives both bootstrap and React versions.",
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
     }
   }
 }

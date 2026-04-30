@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "defaultTheme": "default",
   "storageKey": "sellerhub-theme",
-  
   "themes": {
     "default": {
       "name": "Default Green",
@@ -131,7 +130,6 @@
       }
     }
   },
-  
   "colorMapping": {
     "primary": "--primary-color",
     "primaryHover": "--primary-hover",
@@ -151,5 +149,63 @@
     "sidebarBg": "--sidebar-bg",
     "sidebarText": "--sidebar-text",
     "cardShadow": "--card-shadow"
+  },
+  "reactAliases": {
+    "primary": [
+      "--primary",
+      "--ring"
+    ],
+    "primaryLight": [
+      "--brand-highlight",
+      "--chart-2",
+      "--chart-3"
+    ],
+    "background": [
+      "--background",
+      "--card",
+      "--popover",
+      "--input"
+    ],
+    "surface": [
+      "--secondary",
+      "--muted",
+      "--accent"
+    ],
+    "textPrimary": [
+      "--foreground",
+      "--card-foreground",
+      "--popover-foreground",
+      "--secondary-foreground",
+      "--accent-foreground"
+    ],
+    "textSecondary": [
+      "--muted-foreground"
+    ],
+    "border": [
+      "--border"
+    ],
+    "success": [
+      "--brand-success",
+      "--brand-accent",
+      "--chart-1"
+    ],
+    "warning": [
+      "--brand-warning",
+      "--chart-5"
+    ],
+    "danger": [
+      "--destructive"
+    ],
+    "info": [
+      "--brand-info",
+      "--chart-4"
+    ],
+    "sidebarBg": [
+      "--sidebar",
+      "--sidebar-border"
+    ],
+    "sidebarText": [
+      "--sidebar-foreground"
+    ]
   }
 }

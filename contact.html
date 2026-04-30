@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/jpeg" href="https://images.unsplash.com/photo-1572025442646-866d16c84a54?w=32&h=32&fit=crop">
+  <title>Contact Us - SellerHub</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html" style="color: var(--primary-color);">
+        <img src="https://images.unsplash.com/photo-1572025442646-866d16c84a54?w=40&h=40&fit=crop" alt="SellerHub" class="me-2 rounded" style="width: 32px; height: 32px;">
+        SellerHub
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="sell.html">Sell on SellerHub</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+          <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#faq">FAQ</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-2">
+          <a href="login.html" class="btn btn-outline-primary">Sign in</a>
+          <a href="register.html" class="btn btn-primary">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <main class="py-5">
+    <div class="container" style="max-width: 64rem;">
+      <div class="text-center mb-5">
+        <h1 class="fw-bold mb-3">Get in Touch</h1>
+        <p class="text-muted lead mx-auto" style="max-width: 42rem;">
+          Have questions about our platform? Want to learn more about becoming a vendor?
+          We'd love to hear from you.
+        </p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Contact Form -->
+        <div class="col-lg-7">
+          <div class="card border" id="contactFormCard">
+            <div class="card-body p-4 p-md-5">
+              <form id="publicContactForm" novalidate>
+                <div class="mb-3">
+                  <label for="cFullName" class="form-label">Full Name</label>
+                  <input type="text" class="form-control" id="cFullName" name="fullName" placeholder="Your name" required>
+                  <div class="invalid-feedback">Full Name is required</div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="cEmail" class="form-label">Email Address</label>
+                  <input type="email" class="form-control" id="cEmail" name="emailAddress" placeholder="you@example.com" required>
+                  <div class="invalid-feedback">Please enter a valid email address</div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="cSubject" class="form-label">Subject</label>
+                  <input type="text" class="form-control" id="cSubject" name="subject" placeholder="What's this about?" required>
+                  <div class="invalid-feedback">Subject is required</div>
+                </div>
+
+                <div class="mb-4">
+                  <label for="cMessage" class="form-label">Message</label>
+                  <textarea class="form-control" id="cMessage" name="message" rows="5" placeholder="Your message" required></textarea>
+                  <div class="invalid-feedback">Message is required</div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2" id="cSubmitBtn">Send Message</button>
+
+                <div class="alert alert-danger mt-3 d-none" id="cErrorAlert" role="alert"></div>
+              </form>
+            </div>
+          </div>
+
+          <div class="card border d-none" id="contactSuccessCard">
+            <div class="card-body p-4 p-md-5 text-center">
+              <div class="fs-1 mb-3">✅</div>
+              <h5 class="fw-semibold mb-2">Message Sent!</h5>
+              <p class="text-muted mb-3" id="cSuccessMessage">Thank you for your message! We'll get back to you soon.</p>
+              <button class="btn btn-link" id="cSendAnotherBtn" style="color: var(--primary-color);">Send another message</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-5">
+          <div class="card border mb-4">
+            <div class="card-body p-4">
+              <h5 class="fw-semibold mb-3">Contact Information</h5>
+              <div class="text-muted">
+                <p class="mb-2">📧 support@sellerhub.ng</p>
+                <p class="mb-2">📞 +234 800 000 0000</p>
+                <p class="mb-0">📍 Lagos, Nigeria</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card border">
+            <div class="card-body p-4">
+              <h5 class="fw-semibold mb-3">Business Hours</h5>
+              <div class="text-muted">
+                <p class="mb-2">Monday - Friday: 9:00 AM - 6:00 PM (WAT)</p>
+                <p class="mb-2">Saturday: 10:00 AM - 4:00 PM (WAT)</p>
+                <p class="mb-0">Sunday: Closed</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4 mb-4 mb-lg-0">
+          <h5 class="text-white mb-3">
+            <img src="https://images.unsplash.com/photo-1572025442646-866d16c84a54?w=40&h=40&fit=crop" alt="SellerHub" class="me-2 rounded" style="width: 32px; height: 32px;">
+            SellerHub
+          </h5>
+          <p class="opacity-75">Nigeria's leading e-commerce platform for sellers. Grow your business with us and reach millions of customers nationwide.</p>
+          <div class="d-flex gap-3 mt-3">
+            <a href="#" class="text-white fs-4"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="text-white fs-4"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-white fs-4"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="text-white fs-4"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4">
+          <h6 class="text-white mb-3">Quick Links</h6>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="index.html">Home</a></li>
+            <li class="mb-2"><a href="sell.html">Sell on SellerHub</a></li>
+            <li class="mb-2"><a href="contact.html">Contact</a></li>
+            <li class="mb-2"><a href="index.html#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-4">
+          <h6 class="text-white mb-3">Sellers</h6>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="register.html">Become a Seller</a></li>
+            <li class="mb-2"><a href="login.html">Seller Login</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-4">
+          <h6 class="text-white mb-3">Legal</h6>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li class="mb-2"><a href="terms-of-service.html">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2">
+          <h6 class="text-white mb-3">Contact</h6>
+          <ul class="list-unstyled">
+            <li class="mb-2"><i class="bi bi-envelope me-2"></i> support@sellerhub.com</li>
+            <li class="mb-2"><i class="bi bi-telephone me-2"></i> +234 800 123 4567</li>
+            <li class="mb-2"><i class="bi bi-geo-alt me-2"></i> Lagos, Nigeria</li>
+          </ul>
+        </div>
+      </div>
+      <hr class="my-4 opacity-25">
+      <div class="text-center opacity-75">
+        <small>&copy; 2024 SellerHub. All rights reserved.</small>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/theme-loader.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('publicContactForm');
+      const formCard = document.getElementById('contactFormCard');
+      const successCard = document.getElementById('contactSuccessCard');
+      const submitBtn = document.getElementById('cSubmitBtn');
+      const errorAlert = document.getElementById('cErrorAlert');
+      const successMsg = document.getElementById('cSuccessMessage');
+
+      function isValidEmail(v) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        errorAlert.classList.add('d-none');
+
+        const fullName = document.getElementById('cFullName');
+        const email = document.getElementById('cEmail');
+        const subject = document.getElementById('cSubject');
+        const message = document.getElementById('cMessage');
+
+        let valid = true;
+        [fullName, subject, message].forEach((el) => {
+          if (!el.value.trim()) {
+            el.classList.add('is-invalid');
+            valid = false;
+          } else {
+            el.classList.remove('is-invalid');
+          }
+        });
+        if (!email.value.trim() || !isValidEmail(email.value.trim())) {
+          email.classList.add('is-invalid');
+          valid = false;
+        } else {
+          email.classList.remove('is-invalid');
+        }
+        if (!valid) return;
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Sending...';
+
+        setTimeout(function () {
+          formCard.classList.add('d-none');
+          successMsg.textContent = "Thank you for your message! We'll get back to you soon.";
+          successCard.classList.remove('d-none');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Send Message';
+          form.reset();
+        }, 1000);
+      });
+
+      document.getElementById('cSendAnotherBtn').addEventListener('click', function () {
+        successCard.classList.add('d-none');
+        formCard.classList.remove('d-none');
+      });
+    });
+  </script>
+</body>
+</html>

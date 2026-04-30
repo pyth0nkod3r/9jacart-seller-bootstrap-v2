@@ -41,7 +41,7 @@ class ThemeLoader {
     try {
       // Try to fetch the config file
       const response = await fetch('./themes.config.json');
-      
+
       if (!response.ok) {
         console.warn('[ThemeLoader] Config file not found, using embedded defaults');
         this.config = this._getDefaultConfig();
@@ -252,13 +252,13 @@ class ThemeLoader {
     // Update document theme attribute
     document.documentElement.setAttribute('data-theme', themeId);
 
-    // Add/remove dark class
+    // Add/remove dark class — keep legacy bootstrap classes AND React-aligned ones
     if (theme.isDark) {
-      document.documentElement.classList.add('dark-theme');
-      document.documentElement.classList.remove('light-theme');
+      document.documentElement.classList.add('dark-theme', 'dark');
+      document.documentElement.classList.remove('light-theme', 'light');
     } else {
-      document.documentElement.classList.remove('dark-theme');
-      document.documentElement.classList.add('light-theme');
+      document.documentElement.classList.remove('dark-theme', 'dark');
+      document.documentElement.classList.add('light-theme', 'light');
     }
 
     // Save preference
@@ -268,8 +268,8 @@ class ThemeLoader {
     }
 
     // Dispatch event for other components
-    window.dispatchEvent(new CustomEvent('themechange', { 
-      detail: { themeId, theme } 
+    window.dispatchEvent(new CustomEvent('themechange', {
+      detail: { themeId, theme }
     }));
 
     console.log(`[ThemeLoader] Applied theme: ${theme.name}`);
@@ -283,12 +283,40 @@ class ThemeLoader {
     const root = document.documentElement;
     const colors = theme.colors;
     const mapping = this.config.colorMapping || this._getDefaultColorMapping();
+    const reactAliases = this.config.reactAliases || {};
 
-    // Apply each color as a CSS variable
+    // Apply each color as a CSS variable (legacy bootstrap names + React aliases)
     Object.entries(colors).forEach(([key, value]) => {
       const cssVar = mapping[key] || `--${this._camelToKebab(key)}`;
       root.style.setProperty(cssVar, value);
+
+      // Also write any React-aligned alias tokens for this color
+      const aliases = reactAliases[key];
+      if (Array.isArray(aliases)) {
+        aliases.forEach((aliasVar) => {
+          if (typeof aliasVar === 'string' && aliasVar.startsWith('--')) {
+            root.style.setProperty(aliasVar, value);
+          }
+        });
+      }
     });
+
+    // Constant React tokens that don't come from any single bootstrap color.
+    // These are always white-on-coloured for primary surfaces, and the sidebar's
+    // primary/accent slots all use the theme's primary colour.
+    const white = '#ffffff';
+    root.style.setProperty('--primary-foreground', white);
+    root.style.setProperty('--sidebar-primary', colors.primary);
+    root.style.setProperty('--sidebar-primary-foreground', white);
+    root.style.setProperty('--sidebar-accent', colors.primary);
+    root.style.setProperty('--sidebar-accent-foreground', white);
+    root.style.setProperty('--sidebar-ring', colors.primary);
+
+    // Shared scalar tokens
+    root.style.setProperty('--radius', '0.5rem');
+    if (this.config.brand && this.config.brand.name) {
+      root.style.setProperty('--brand-name', '"' + this.config.brand.name + '"');
+    }
 
     // Override Bootstrap 5 CSS variables so Bootstrap components use correct colors
     if (theme.isDark) {
@@ -393,7 +421,7 @@ class ThemeLoader {
   toggleDarkMode() {
     const currentIsDark = this.isDark();
     const themes = this.getThemes();
-    
+
     // Find a theme with opposite mode
     const targetTheme = themes.find(t => t.isDark !== currentIsDark);
     if (targetTheme) {
