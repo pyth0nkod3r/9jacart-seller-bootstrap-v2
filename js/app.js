@@ -408,19 +408,83 @@ async function initThemeSwitcher() {
   });
 }
 
+/**
+ * Create the theme switcher.
+ *
+ * Renders inline (matching the React `ThemeSwitcher` dropdown) when a host
+ * element is available. Falls back to a floating FAB only if no host is found.
+ *
+ * Host resolution order:
+ *   1. An explicit `#themeSwitcherSlot` element (opt-in per page)
+ *   2. The dashboard top-header right cluster (`.top-header > div:last-child`)
+ *   3. The marketing navbar right side (`.navbar .navbar-collapse`)
+ *   4. Floating FAB on document.body
+ */
 function createThemeSwitcher() {
-  // Remove any existing theme switcher
+  // Remove any existing instance
   const existing = document.querySelector('.theme-switcher-container');
   if (existing) existing.remove();
 
-  // Create container
-  const container = document.createElement('div');
-  container.className = 'theme-switcher-container';
+  // Resolve a host: prefer inline placements that mirror React's header dropdown.
+  let host = document.getElementById('themeSwitcherSlot');
+  let mode = 'inline';
 
-  // Create popout menu
+  if (!host) {
+    const topHeader = document.querySelector('.top-header');
+    if (topHeader) {
+      // Pick the right-side cluster — last flex child — to sit beside notifications.
+      const rightCluster = topHeader.lastElementChild;
+      host = rightCluster && rightCluster !== topHeader.firstElementChild
+        ? rightCluster
+        : topHeader;
+    }
+  }
+
+  if (!host) {
+    const navbarCollapse = document.querySelector('.navbar .navbar-collapse');
+    if (navbarCollapse) host = navbarCollapse;
+  }
+
+  if (!host) {
+    host = document.body;
+    mode = 'fab';
+  }
+
+  // Container
+  const container = document.createElement('div');
+  container.className = `theme-switcher-container theme-switcher-mode-${mode}`;
+
+  // Trigger button — mirrors React `ThemeSwitcher` trigger
+  const btn = document.createElement('button');
+  btn.id = 'themeSwitcherFab';
+  btn.setAttribute('aria-label', 'Switch theme');
+  btn.setAttribute('aria-haspopup', 'listbox');
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('type', 'button');
+
+  if (mode === 'fab') {
+    btn.className = 'theme-switcher-btn';
+    btn.innerHTML = '<i class="bi bi-palette"></i>';
+  } else {
+    btn.className = 'theme-switcher-trigger btn btn-outline-secondary btn-sm d-flex align-items-center gap-2';
+    btn.innerHTML = `
+      <i class="bi bi-palette"></i>
+      <span class="theme-switcher-label d-none d-md-inline">Theme</span>
+      <i class="bi bi-chevron-down theme-switcher-chevron"></i>
+    `;
+  }
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleThemePopout();
+  });
+
+  // Popout panel
   const popout = document.createElement('div');
   popout.className = 'theme-popout';
   popout.id = 'themePopout';
+  popout.setAttribute('role', 'listbox');
+  popout.setAttribute('aria-label', 'Available themes');
 
   const header = document.createElement('div');
   header.className = 'theme-popout-header';
@@ -431,20 +495,14 @@ function createThemeSwitcher() {
   optionsContainer.id = 'themeOptionsContainer';
   popout.appendChild(optionsContainer);
 
-  // Create FAB button
-  const btn = document.createElement('button');
-  btn.className = 'theme-switcher-btn';
-  btn.id = 'themeSwitcherFab';
-  btn.setAttribute('aria-label', 'Toggle theme switcher');
-  btn.innerHTML = '<i class="bi bi-palette"></i>';
-  btn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    toggleThemePopout();
-  });
+  const footer = document.createElement('div');
+  footer.className = 'theme-popout-footer';
+  footer.textContent = 'Theme preference is saved automatically';
+  popout.appendChild(footer);
 
-  container.appendChild(popout);
   container.appendChild(btn);
-  document.body.appendChild(container);
+  container.appendChild(popout);
+  host.appendChild(container);
 
   // Populate theme options
   populateThemeOptions();
@@ -490,16 +548,19 @@ function populateThemeOptions() {
 
 function toggleThemePopout() {
   const popout = document.getElementById('themePopout');
+  const trigger = document.getElementById('themeSwitcherFab');
   if (popout) {
-    popout.classList.toggle('show');
+    const isOpen = popout.classList.toggle('show');
+    if (trigger) trigger.setAttribute('aria-expanded', String(isOpen));
   }
 }
 
 function closeThemePopout(e) {
   const popout = document.getElementById('themePopout');
-  const fab = document.getElementById('themeSwitcherFab');
-  if (popout && e && !popout.contains(e.target) && fab && !fab.contains(e.target)) {
+  const trigger = document.getElementById('themeSwitcherFab');
+  if (popout && e && !popout.contains(e.target) && trigger && !trigger.contains(e.target)) {
     popout.classList.remove('show');
+    trigger.setAttribute('aria-expanded', 'false');
   }
 }
 
