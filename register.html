@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/jpeg"
+    href="https://images.unsplash.com/photo-1572025442646-866d16c84a54?w=32&h=32&fit=crop">
+  <title>Register - SellerHub Seller</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <style>
+    /*
+     * 4-step registration wizard — mirrors React `src/pages/auth/register/RegisterPage.tsx`.
+     * Steps: 1. Account → 2. Personal → 3. Business → 4. Documents.
+     */
+    .register-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+      padding: 2rem 0;
+    }
+
+    .register-card {
+      max-width: 720px;
+      width: 100%;
+      border-radius: 1rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
+
+    .register-card .card-body {
+      padding: 2.5rem;
+    }
+
+    .brand-logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 12px;
+    }
+
+    /* Progress steps indicator (mirrors React `STEPS` map) */
+    .wizard-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .wizard-step {
+      display: flex;
+      align-items: center;
+    }
+
+    .wizard-step-circle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--surface-color, #e9ecef);
+      color: var(--text-secondary, #6c757d);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .wizard-step.is-active .wizard-step-circle,
+    .wizard-step.is-complete .wizard-step-circle {
+      background: var(--primary-color);
+      color: #fff;
+    }
+
+    .wizard-step-label {
+      margin-left: 0.75rem;
+    }
+
+    .wizard-step-label .title {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-primary, #212529);
+    }
+
+    .wizard-step-label .desc {
+      font-size: 0.75rem;
+      color: var(--text-secondary, #6c757d);
+    }
+
+    .wizard-step-bar {
+      flex: 1;
+      height: 4px;
+      margin: 0 0.5rem;
+      background: var(--surface-color, #e9ecef);
+      border-radius: 2px;
+    }
+
+    .wizard-step.is-complete + .wizard-step-bar {
+      background: var(--primary-color);
+    }
+
+    @media (max-width: 575.98px) {
+      .wizard-step-label {
+        display: none;
+      }
+    }
+
+    /* Document upload drop zone (mirrors React `DocumentUpload` component) */
+    .doc-upload {
+      border: 2px dashed var(--border-color, #dee2e6);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .doc-upload:hover {
+      border-color: var(--primary-color);
+      background: var(--surface-color, #f8f9fa);
+    }
+
+    .doc-upload.has-file {
+      border-style: solid;
+      border-color: var(--primary-color);
+      text-align: left;
+    }
+
+    .doc-upload input[type="file"] {
+      display: none;
+    }
+
+    .wizard-step-content {
+      display: none;
+    }
+
+    .wizard-step-content.is-active {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="register-container">
+    <div class="card register-card">
+      <div class="card-body">
+        <div class="text-center mb-4">
+          <img src="https://images.unsplash.com/photo-1572025442646-866d16c84a54?w=100&h=100&fit=crop" alt="SellerHub"
+            class="brand-logo mb-3">
+          <h4 class="fw-bold">Become a Seller</h4>
+          <p class="text-muted">Create your seller account and start selling today</p>
+        </div>
+
+        <!-- Progress steps (mirrors React STEPS array) -->
+        <div class="wizard-steps" id="wizardSteps">
+          <div class="wizard-step is-active" data-step="1">
+            <div class="wizard-step-circle">1</div>
+            <div class="wizard-step-label">
+              <div class="title">Account</div>
+              <div class="desc">Email & Password</div>
+            </div>
+          </div>
+          <div class="wizard-step-bar"></div>
+          <div class="wizard-step" data-step="2">
+            <div class="wizard-step-circle">2</div>
+            <div class="wizard-step-label">
+              <div class="title">Personal</div>
+              <div class="desc">Your details</div>
+            </div>
+          </div>
+          <div class="wizard-step-bar"></div>
+          <div class="wizard-step" data-step="3">
+            <div class="wizard-step-circle">3</div>
+            <div class="wizard-step-label">
+              <div class="title">Business</div>
+              <div class="desc">Business info</div>
+            </div>
+          </div>
+          <div class="wizard-step-bar"></div>
+          <div class="wizard-step" data-step="4">
+            <div class="wizard-step-circle">4</div>
+            <div class="wizard-step-label">
+              <div class="title">Documents</div>
+              <div class="desc">Upload files</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="wizardError" class="alert alert-danger d-none" role="alert"></div>
+
+        <form id="registerForm" novalidate>
+          <!-- Step 1: Account Details -->
+          <div class="wizard-step-content is-active" data-step="1">
+            <h5 class="fw-semibold mb-3">Account Details</h5>
+            <div class="mb-3">
+              <label class="form-label">Email Address *</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                <input type="email" class="form-control" name="emailAddress" placeholder="you@example.com">
+              </div>
+              <div class="invalid-feedback d-block" data-error="emailAddress"></div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password *</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                <input type="password" class="form-control" name="password" placeholder="Min. 8 characters">
+              </div>
+              <small class="text-muted">Minimum 8 characters</small>
+              <div class="invalid-feedback d-block" data-error="password"></div>
+            </div>
+          </div>
+
+          <!-- Step 2: Personal Information -->
+          <div class="wizard-step-content" data-step="2">
+            <h5 class="fw-semibold mb-3">Personal Information</h5>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Full Name *</label>
+                <input type="text" class="form-control" name="fullName" placeholder="Jane Doe">
+                <div class="invalid-feedback d-block" data-error="fullName"></div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Business Name *</label>
+                <input type="text" class="form-control" name="businessName" placeholder="Acme Ltd">
+                <div class="invalid-feedback d-block" data-error="businessName"></div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Business Category *</label>
+              <select class="form-select" name="businessCategory">
+                <option value="">Select a category</option>
+                <option value="electronics">Electronics</option>
+                <option value="fashion">Fashion</option>
+                <option value="home_living">Home &amp; Living</option>
+                <option value="food_beverages">Food &amp; Beverages</option>
+                <option value="beauty">Beauty</option>
+                <option value="sports_fitness">Sports &amp; Fitness</option>
+                <option value="general">General Merchandise</option>
+              </select>
+              <div class="invalid-feedback d-block" data-error="businessCategory"></div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Phone Number *</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                <input type="tel" class="form-control" name="phoneNumber" placeholder="+234 800 000 0000">
+              </div>
+              <div class="invalid-feedback d-block" data-error="phoneNumber"></div>
+            </div>
+          </div>
+
+          <!-- Step 3: Business Information -->
+          <div class="wizard-step-content" data-step="3">
+            <h5 class="fw-semibold mb-3">Business Information</h5>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Business Registration Number *</label>
+                <input type="text" class="form-control" name="businessRegNumber" placeholder="RC-1234567">
+                <div class="invalid-feedback d-block" data-error="businessRegNumber"></div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Store Name *</label>
+                <input type="text" class="form-control" name="storeName" placeholder="Your store name">
+                <div class="invalid-feedback d-block" data-error="storeName"></div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Business Address *</label>
+              <textarea class="form-control" name="businessAddress" rows="3"
+                placeholder="Street, City, State"></textarea>
+              <div class="invalid-feedback d-block" data-error="businessAddress"></div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Tax ID Number *</label>
+              <input type="text" class="form-control" name="taxIdNumber" placeholder="TIN-XXXXXXXX">
+              <div class="invalid-feedback d-block" data-error="taxIdNumber"></div>
+            </div>
+          </div>
+
+          <!-- Step 4: Documents -->
+          <div class="wizard-step-content" data-step="4">
+            <h5 class="fw-semibold mb-1">Upload Documents</h5>
+            <p class="text-muted small mb-3">
+              Please upload clear copies of your identification and business registration documents.
+            </p>
+
+            <div class="mb-3">
+              <label class="form-label">ID Document *</label>
+              <label class="doc-upload" id="idDocumentDrop">
+                <input type="file" name="idDocument" accept="image/*,application/pdf">
+                <i class="bi bi-cloud-upload fs-3 d-block mb-2 text-muted"></i>
+                <div class="fw-semibold">Click to upload or drag &amp; drop</div>
+                <small class="text-muted">PNG, JPG, or PDF up to 5MB</small>
+              </label>
+              <div class="invalid-feedback d-block" data-error="idDocument"></div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Business Registration Certificate *</label>
+              <label class="doc-upload" id="businessRegCertificateDrop">
+                <input type="file" name="businessRegCertificate" accept="image/*,application/pdf">
+                <i class="bi bi-cloud-upload fs-3 d-block mb-2 text-muted"></i>
+                <div class="fw-semibold">Click to upload or drag &amp; drop</div>
+                <small class="text-muted">PNG, JPG, or PDF up to 5MB</small>
+              </label>
+              <div class="invalid-feedback d-block" data-error="businessRegCertificate"></div>
+            </div>
+
+            <div class="form-check mt-3">
+              <input type="checkbox" class="form-check-input" id="terms">
+              <label class="form-check-label" for="terms">
+                I agree to the <a href="terms-of-service.html" style="color: var(--primary-color);">Terms of
+                  Service</a>
+                and <a href="privacy-policy.html" style="color: var(--primary-color);">Privacy Policy</a>
+              </label>
+              <div class="invalid-feedback d-block" data-error="terms"></div>
+            </div>
+          </div>
+
+          <!-- Navigation buttons -->
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-outline-secondary" id="wizardBackBtn" disabled>
+              <i class="bi bi-arrow-left me-1"></i>Back
+            </button>
+            <button type="button" class="btn btn-primary" id="wizardNextBtn">
+              Continue<i class="bi bi-arrow-right ms-1"></i>
+            </button>
+            <button type="submit" class="btn btn-primary d-none" id="wizardSubmitBtn">
+              <i class="bi bi-person-plus me-1"></i>Create Account
+            </button>
+          </div>
+        </form>
+
+        <hr class="my-4">
+
+        <div class="text-center">
+          <span class="text-muted">Already have an account?</span>
+          <a href="login.html" class="text-decoration-none ms-1" style="color: var(--primary-color);">Sign in</a>
+          <span class="mx-2">·</span>
+          <a href="index.html" class="text-muted text-decoration-none small">
+            <i class="bi bi-arrow-left me-1"></i>Back to Home
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/theme-loader.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    /*
+     * Wizard controller — mirrors validation logic of React `RegisterPage.tsx`:
+     *  - validateStep(1): emailAddress (regex) + password (>=8 chars)
+     *  - validateStep(2): fullName, businessName, businessCategory, phoneNumber required
+     *  - validateStep(3): businessRegNumber, storeName, businessAddress, taxIdNumber required
+     *  - validateStep(4): idDocument and businessRegCertificate required + terms checkbox
+     */
+    (function () {
+      const TOTAL_STEPS = 4;
+      let currentStep = 1;
+
+      const form = document.getElementById('registerForm');
+      const stepNodes = form.querySelectorAll('.wizard-step-content');
+      const indicatorSteps = document.querySelectorAll('#wizardSteps .wizard-step');
+      const indicatorBars = document.querySelectorAll('#wizardSteps .wizard-step-bar');
+      const backBtn = document.getElementById('wizardBackBtn');
+      const nextBtn = document.getElementById('wizardNextBtn');
+      const submitBtn = document.getElementById('wizardSubmitBtn');
+      const errorBox = document.getElementById('wizardError');
+
+      function clearErrors() {
+        form.querySelectorAll('[data-error]').forEach(el => { el.textContent = ''; });
+        errorBox.classList.add('d-none');
+        errorBox.textContent = '';
+      }
+
+      function setError(name, message) {
+        const target = form.querySelector(`[data-error="${name}"]`);
+        if (target) target.textContent = message;
+      }
+
+      function getValue(name) {
+        const el = form.querySelector(`[name="${name}"]`);
+        return el ? (el.type === 'file' ? (el.files && el.files[0] ? el.files[0] : null) : el.value) : '';
+      }
+
+      function validateStep(step) {
+        clearErrors();
+        let ok = true;
+        const fail = (name, msg) => { setError(name, msg); ok = false; };
+
+        if (step === 1) {
+          const email = (getValue('emailAddress') || '').trim();
+          const pw = getValue('password') || '';
+          if (!email) fail('emailAddress', 'Email is required');
+          else if (!/\S+@\S+\.\S+/.test(email)) fail('emailAddress', 'Please enter a valid email');
+          if (!pw) fail('password', 'Password is required');
+          else if (pw.length < 8) fail('password', 'Password must be at least 8 characters');
+        } else if (step === 2) {
+          if (!(getValue('fullName') || '').trim()) fail('fullName', 'Full name is required');
+          if (!(getValue('businessName') || '').trim()) fail('businessName', 'Business name is required');
+          if (!getValue('businessCategory')) fail('businessCategory', 'Business category is required');
+          if (!(getValue('phoneNumber') || '').trim()) fail('phoneNumber', 'Phone number is required');
+        } else if (step === 3) {
+          if (!(getValue('businessRegNumber') || '').trim()) fail('businessRegNumber', 'Business registration number is required');
+          if (!(getValue('storeName') || '').trim()) fail('storeName', 'Store name is required');
+          if (!(getValue('businessAddress') || '').trim()) fail('businessAddress', 'Business address is required');
+          if (!(getValue('taxIdNumber') || '').trim()) fail('taxIdNumber', 'Tax ID is required');
+        } else if (step === 4) {
+          if (!getValue('idDocument')) fail('idDocument', 'ID document is required');
+          if (!getValue('businessRegCertificate')) fail('businessRegCertificate', 'Business registration certificate is required');
+          if (!document.getElementById('terms').checked) fail('terms', 'You must agree to the terms');
+        }
+        return ok;
+      }
+
+      function showStep(step) {
+        stepNodes.forEach(node => {
+          node.classList.toggle('is-active', Number(node.dataset.step) === step);
+        });
+        indicatorSteps.forEach(node => {
+          const n = Number(node.dataset.step);
+          node.classList.toggle('is-active', n === step);
+          node.classList.toggle('is-complete', n < step);
+        });
+        indicatorBars.forEach((bar, i) => {
+          // Bar between step (i+1) and (i+2): complete when current step > i+1
+          bar.style.background = (step > i + 1) ? 'var(--primary-color)' : '';
+        });
+        backBtn.disabled = step === 1;
+        nextBtn.classList.toggle('d-none', step === TOTAL_STEPS);
+        submitBtn.classList.toggle('d-none', step !== TOTAL_STEPS);
+        clearErrors();
+      }
+
+      // Reflect chosen filename in document upload zones (mirrors React DocumentUpload visual feedback)
+      ['idDocumentDrop', 'businessRegCertificateDrop'].forEach(id => {
+        const drop = document.getElementById(id);
+        const input = drop.querySelector('input[type="file"]');
+        input.addEventListener('change', () => {
+          if (input.files && input.files[0]) {
+            drop.classList.add('has-file');
+            drop.querySelector('.fw-semibold').textContent = input.files[0].name;
+          } else {
+            drop.classList.remove('has-file');
+          }
+        });
+      });
+
+      nextBtn.addEventListener('click', () => {
+        if (!validateStep(currentStep)) return;
+        currentStep = Math.min(currentStep + 1, TOTAL_STEPS);
+        showStep(currentStep);
+      });
+
+      backBtn.addEventListener('click', () => {
+        currentStep = Math.max(currentStep - 1, 1);
+        showStep(currentStep);
+      });
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!validateStep(4)) return;
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Creating account...';
+
+        // Mock auth — preserves existing demo behaviour
+        if (typeof showToast === 'function') {
+          showToast('Account created successfully! Redirecting to dashboard...', 'success');
+        }
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userName', getValue('fullName') || 'Demo Seller');
+        localStorage.setItem('storeName', getValue('storeName') || 'Demo Store');
+        setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
+      });
+
+      // Initial render
+      showStep(currentStep);
+    })();
+  </script>
+</body>
+
+</html>
